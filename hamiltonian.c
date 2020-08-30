@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
             sizeof(int), sizeof(size_t), sizeof(void *));
 #endif
 
-     struct graph *g1 = testgraph_alloc();
+     struct graph *g1 = testgraph_alloc_dodec();
 
      graph_show(g1);
 

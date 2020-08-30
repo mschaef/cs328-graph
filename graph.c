@@ -126,6 +126,11 @@ void graph_add_edge(struct graph *g, graph_node from, graph_node to) {
      g->edge_pool_end++;
 }
 
+void graph_add_undirected_edge(struct graph *g, graph_node n1, graph_node n2) {
+     graph_add_edge(g, n1, n2);
+     graph_add_edge(g, n2, n1);
+}
+
 int graph_get_all_nodes(struct graph *g, size_t lim, graph_node buf[]) {
      assert_graph(g);
 
