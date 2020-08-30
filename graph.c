@@ -19,6 +19,8 @@ struct graph {
      size_t node_pool_bytes;
      size_t edge_pool_entries;
 
+     size_t node_count;
+
      char *node_pool;
      char *node_pool_end;
 
@@ -43,6 +45,8 @@ struct graph *graph_alloc(size_t node_pool_bytes, size_t edge_pool_entries) {
      g->magic = GRAPH_MAGIC;
      g->node_pool_bytes = node_pool_bytes;
      g->edge_pool_entries = edge_pool_entries;
+
+     g->node_count = 0;
 
      g->node_pool = ((char *)g) + sizeof(struct graph);
      g->node_pool_end = g->node_pool;
@@ -104,6 +108,7 @@ graph_node graph_add_node(struct graph *g, char *name) {
      graph_node n = g->node_pool_end;
 
      g->node_pool_end = graph_next_node(g, n);
+     g->node_count++;
 
      return n;
 }
@@ -156,4 +161,10 @@ int graph_get_next_nodes(struct graph *g, graph_node from, size_t lim, graph_nod
      }
 
      return count;
+}
+
+size_t graph_get_node_count(struct graph *g) {
+     assert_graph(g);
+
+     return g->node_count;
 }
