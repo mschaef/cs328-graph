@@ -27,3 +27,7 @@ void graph_show(struct graph *g);
 graph_node graph_add_node(struct graph *g, char *name);
 
 void graph_add_edge(struct graph *g, graph_node from, graph_node to);
+
+int graph_get_all_nodes(struct graph *g, size_t lim, graph_node buf[]);
+
+int graph_get_next_nodes(struct graph *g, graph_node from, size_t lim, graph_node buf[]);

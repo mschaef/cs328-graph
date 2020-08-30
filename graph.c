@@ -116,3 +116,44 @@ void graph_add_edge(struct graph *g, graph_node from, graph_node to) {
 
      g->edge_pool_end++;
 }
+
+int graph_get_all_nodes(struct graph *g, size_t lim, graph_node buf[]) {
+     assert_graph(g);
+
+     size_t count = 0;
+
+     graph_node n = g->node_pool;
+
+     while(*n) {
+          assert(count < lim);
+
+          buf[count] = n;
+
+          count++;
+
+          n = graph_next_node(g, n);
+     }
+
+     return count;
+}
+
+int graph_get_next_nodes(struct graph *g, graph_node from, size_t lim, graph_node buf[]) {
+     assert_graph(g);
+
+     size_t count = 0;
+
+     struct graph_edge *e = g->edge_pool;
+
+     while(e->from) {
+
+          if (e->from == from) {
+               assert(count < lim);
+               buf[count] = e->to;
+               count++;
+          }
+
+          e++;
+     }
+
+     return count;
+}
