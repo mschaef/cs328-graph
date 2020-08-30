@@ -92,8 +92,10 @@ int find_hamiltonian_path(struct graph *g, size_t lim, graph_node buf[]) {
 
 int main(int argc, char *argv[]) {
 
+#ifdef DEBUG
      printf("sizeof(int) = %zu, sizeof(size_t) = %zu, sizeof(void *) = %zu\n",
             sizeof(int), sizeof(size_t), sizeof(void *));
+#endif
 
      struct graph *g1 = testgraph_alloc();
 

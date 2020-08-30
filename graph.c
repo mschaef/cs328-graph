@@ -74,11 +74,15 @@ graph_node graph_next_node(struct graph *g, graph_node n) {
 void graph_show(struct graph *g) {
      assert_graph(g);
 
+#ifdef DEBUG
      printf("graph (%p) {\n", g);
      printf("   node_pool_bytes = %zu\n", g->node_pool_bytes);
      printf("   edge_pool_entries = %zu\n", g->edge_pool_entries);
      printf("   node_pool = %p..%p\n", g->node_pool, g->node_pool_end);
      printf("   edge_pool = %p..%p\n", g->edge_pool, g->edge_pool_end);
+#else
+     printf("graph {\n");
+#endif
 
      printf("   nodes {\n");
      for(graph_node n = g->node_pool; *n; n = graph_next_node(g, n)) {
