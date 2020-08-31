@@ -39,3 +39,5 @@ int graph_get_all_nodes(struct graph *g, size_t lim, graph_node buf[]);
 int graph_get_next_nodes(struct graph *g, graph_node from, size_t lim, graph_node buf[]);
 
 size_t graph_get_node_count(struct graph *g);
+
+int graph_node_reachable_from(struct graph *g, graph_node at, graph_node dest);

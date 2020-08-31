@@ -156,3 +156,20 @@ size_t graph_get_node_count(struct graph *g) {
 
      return g->node_count;
 }
+
+int graph_node_reachable_from(struct graph *g, graph_node at, graph_node dest) {
+
+     assert_graph(g);
+
+     struct graph_edge *e = g->edge_pool;
+
+     while(e->from) {
+          if (e->from == at && e->to == dest) {
+               return TRUE;
+          }
+
+          e++;
+     }
+
+     return FALSE;
+}
