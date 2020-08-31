@@ -23,32 +23,44 @@ void show_path(graph_node path_buf[], size_t path_length) {
      printf("\n");
 }
 
-int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t path_length, graph_node at) {
+int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t path_length, graph_node at, int cyclic) {
 
      show_path(path_buf, path_length);
 
      if (path_length >= lim) {
+          printf("overrun\n");
           return -1;
      }
 
      if (path_length == graph_get_node_count(g)) {
-          return path_length;
+          if (cyclic) {
+               if (graph_node_reachable_from(g, at, path_buf[0])) {
+                    printf("found cycle\b");
+                    return path_length;
+               } else {
+                    printf("unreachable: %s\n", path_buf[0]);
+                    return -1;
+               }
+          } else {
+               printf("found path\b");
+               return path_length;
+          }
      }
 
      graph_node nodes[MAX_NODES];
-
      int count = graph_get_next_nodes(g, at, MAX_NODES, nodes);
 
      for(int ii = 0; ii < count; ii++) {
           graph_node next = nodes[ii];
 
           if (path_visited_p(path_buf, path_length, next)) {
+               printf("already visited: %s\n", next);
                continue;
           }
 
           path_buf[path_length] = next;
 
-          int path_len = find_hamiltonian1(g, lim, path_buf, path_length + 1, next);
+          int path_len = find_hamiltonian1(g, lim, path_buf, path_length + 1, next, cyclic);
 
           if (path_len >= 0) {
                return path_len;
@@ -58,7 +70,7 @@ int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t
      return -1;
 }
 
-int find_hamiltonian(struct graph *g, size_t lim, graph_node path_buf[]) {
+int find_hamiltonian(struct graph *g, size_t lim, graph_node path_buf[], int cyclic) {
      graph_node nodes[MAX_NODES];
 
      int count = graph_get_all_nodes(g, MAX_NODES, nodes);
@@ -66,7 +78,7 @@ int find_hamiltonian(struct graph *g, size_t lim, graph_node path_buf[]) {
      for(int ii = 0; ii < count; ii++) {
           path_buf[0] = nodes[ii];
 
-          int path_len = find_hamiltonian1(g, lim, path_buf, 1, path_buf[0]);
+          int path_len = find_hamiltonian1(g, lim, path_buf, 1, path_buf[0], cyclic);
 
           if (path_len >= 0) {
                return path_len;
@@ -90,7 +102,7 @@ int main(int argc, char *argv[]) {
 
      graph_node nodes[MAX_NODES];
 
-     int count = find_hamiltonian(g1, MAX_NODES, nodes);
+     int count = find_hamiltonian(g1, MAX_NODES, nodes, FALSE || TRUE);
 
      if (count < 0) {
           printf("Hamiltonian path not found.\n");
