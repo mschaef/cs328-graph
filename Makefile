@@ -9,7 +9,7 @@ clean:
 	rm hamiltonian.exe hamiltonian-debug.exe
 
 hamiltonian.exe: ${all} Makefile
-	gcc ${sources} -o $@
+	gcc ${sources} -Wall -o $@
 
 hamiltonian-debug.exe: ${all} Makefile
-	gcc ${sources} -o $@ -D DEBUG
+	gcc ${sources} -Wall -o $@ -D DEBUG
