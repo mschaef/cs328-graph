@@ -16,14 +16,14 @@ int path_visited_p(graph_node buf[], size_t path_len, graph_node n) {
      return FALSE;
 }
 
-int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t ofs, graph_node at) {
+int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t path_length, graph_node at) {
 
-     if (ofs >= lim) {
+     if (path_length >= lim) {
           return -1;
      }
 
-     if (ofs == graph_get_node_count(g)) {
-          return ofs;
+     if (path_length == graph_get_node_count(g)) {
+          return path_length;
      }
 
      graph_node nodes[MAX_NODES];
@@ -33,13 +33,13 @@ int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t
      for(int ii = 0; ii < count; ii++) {
           graph_node next = nodes[ii];
 
-          if (path_visited_p(path_buf, ofs, next)) {
+          if (path_visited_p(path_buf, path_length, next)) {
                continue;
           }
 
-          path_buf[ofs] = next;
+          path_buf[path_length] = next;
 
-          int path_len = find_hamiltonian1(g, lim, path_buf, ofs + 1, next);
+          int path_len = find_hamiltonian1(g, lim, path_buf, path_length + 1, next);
 
           if (path_len >= 0) {
                return path_len;
