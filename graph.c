@@ -3,30 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "graph.h"
 
 #define GRAPH_MAGIC 0x4c567668
-
-typedef char *graph_node;
-
-struct graph_edge {
-     graph_node from;
-     graph_node to;
-};
-
-struct graph {
-     int magic;
-
-     size_t node_pool_bytes;
-     size_t edge_pool_entries;
-
-     size_t node_count;
-
-     char *node_pool;
-     char *node_pool_end;
-
-     struct graph_edge *edge_pool;
-     struct graph_edge *edge_pool_end;
-};
 
 void assert_graph(struct graph *g) {
      assert(g && g->magic == GRAPH_MAGIC);

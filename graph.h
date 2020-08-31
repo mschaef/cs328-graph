@@ -1,3 +1,7 @@
+
+#define FALSE 0
+#define TRUE (!FALSE)
+
 typedef char *graph_node;
 
 struct graph_edge {
@@ -10,6 +14,7 @@ struct graph {
 
      size_t node_pool_bytes;
      size_t edge_pool_entries;
+     size_t node_count;
 
      char *node_pool;
      char *node_pool_end;

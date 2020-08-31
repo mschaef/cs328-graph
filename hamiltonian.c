@@ -4,9 +4,6 @@
 
 #include "test-graphs.h"
 
-#define FALSE 0
-#define TRUE (!FALSE)
-
 #define MAX_NODES 100
 
 int path_visited_p(size_t lim, graph_node buf[], graph_node n) {
