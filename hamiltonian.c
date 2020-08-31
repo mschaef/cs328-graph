@@ -25,24 +25,34 @@ void show_path(graph_node path_buf[], size_t path_length) {
 
 int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t path_length, graph_node at, int cyclic) {
 
+#ifdef DEBUG
      show_path(path_buf, path_length);
+#endif
 
      if (path_length >= lim) {
+#ifdef DEBUG
           printf("overrun\n");
+#endif
           return -1;
      }
 
      if (path_length == graph_get_node_count(g)) {
           if (cyclic) {
                if (graph_node_reachable_from(g, at, path_buf[0])) {
+#ifdef DEBUG
                     printf("found cycle\b");
+#endif
                     return path_length;
                } else {
+#ifdef DEBUG
                     printf("unreachable: %s\n", path_buf[0]);
+#endif
                     return -1;
                }
           } else {
+#ifdef DEBUG
                printf("found path\b");
+#endif
                return path_length;
           }
      }
@@ -54,7 +64,9 @@ int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t
           graph_node next = nodes[ii];
 
           if (path_visited_p(path_buf, path_length, next)) {
+#ifdef DEBUG
                printf("already visited: %s\n", next);
+#endif
                continue;
           }
 
