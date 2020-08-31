@@ -16,7 +16,16 @@ int path_visited_p(graph_node buf[], size_t path_len, graph_node n) {
      return FALSE;
 }
 
+void show_path(graph_node path_buf[], size_t path_length) {
+     for(size_t ii = 0; ii < path_length; ii++) {
+          printf("%s ", path_buf[ii]);
+     }
+     printf("\n");
+}
+
 int find_hamiltonian1(struct graph *g, size_t lim, graph_node path_buf[], size_t path_length, graph_node at) {
+
+     show_path(path_buf, path_length);
 
      if (path_length >= lim) {
           return -1;
